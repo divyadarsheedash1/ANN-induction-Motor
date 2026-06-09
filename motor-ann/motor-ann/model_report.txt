@@ -1,0 +1,114 @@
+1)this is m1 -  Epoch : 498  Train Loss : 0.0202  Test Loss : 0.0145  Accuracy : 0.9967 
+
+
+class MotorModel_1(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.l1 = nn.Linear(4 , 64)
+        self.l2 = nn.Linear(64 , 128)
+        self.l3 = nn.Linear(128 , 64)
+        self.l4 = nn.Linear(64 , 6)
+        self.r = nn.ReLU()
+        self.d = nn.Dropout(0.15)
+    def forward(self , x):
+        return self.l4(self.d(self.r(self.l3(self.d(self.r(self.l2(self.d(self.r(self.l1(x))))))))))
+
+
+2) this is m2 - Epoch : 498  Train Loss : 0.0003  Test Loss : 0.0291  Accuracy : 0.9956 
+
+class DeepResNet(nn.Module):
+
+    def __init__(self):
+
+        super().__init__()
+        self.input = nn.Linear(4, 64)
+        self.block1 = ResidualBlock(64)
+        self.block2 = ResidualBlock(64)
+        self.output = nn.Linear(64, 6)
+        self.relu = nn.ReLU()
+    def forward(self, x):
+        x = self.relu(self.input(x))
+        x = self.block1(x)
+        x = self.block2(x)
+        x = self.output(x)
+        return x
+
+3) this si m3 - Epoch : 498  Train Loss : 0.0490  Test Loss : 0.0277  Accuracy : 0.9933 
+
+
+import torch
+from torch import nn
+
+class MLP(nn.Module):
+    
+    def __init__(self):
+        super().__init__()
+        
+        self.layer_stack = nn.Sequential(
+            
+            nn.Linear(4, 64),
+            nn.ReLU(),
+            nn.Dropout(0.2),
+            
+            nn.Linear(64, 64),
+            nn.ReLU(),
+            nn.Dropout(0.2),
+            
+            nn.Linear(64, 6)
+        )
+        
+    def forward(self, x):
+        
+        return self.layer_stack(x)
+
+4) this is m4 - Epoch : 498  Train Loss : 0.0887  Test Loss : 0.0896  Accuracy : 0.9967
+
+
+class MotorANN(nn.Module):
+    
+    def __init__(self):
+        
+        super().__init__()
+        
+        self.network = nn.Sequential(
+            
+            nn.Linear(4, 50),
+            nn.Sigmoid(),
+            
+            nn.Linear(50, 50),
+            nn.Sigmoid(),
+            
+            nn.Linear(50, 6)
+        )
+        
+    def forward(self, x):
+        
+        return self.network(x)
+
+5) this is m5 - Epoch : 498  Train Loss : 0.0569  Test Loss : 0.0289  Accuracy : 0.9933 
+
+class ModernANN(nn.Module):
+    
+    def __init__(self):
+        
+        super().__init__()
+        
+        self.network = nn.Sequential(
+            
+            nn.Linear(4, 64),
+            nn.ReLU(),
+            nn.Dropout(0.2),
+            
+            nn.Linear(64, 64),
+            nn.ReLU(),
+            nn.Dropout(0.2),
+            
+            nn.Linear(64, 6)
+        )
+        
+    def forward(self, x):
+        
+        return self.network(x)
+
+
+
